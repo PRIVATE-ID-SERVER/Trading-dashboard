@@ -195,13 +195,18 @@
   </style>
 </head>
 <body>
-  <div class="wallet-container" id="wallet-main">
-    <div class="wallet-header">
-      <div class="wallet-title">Wallet Portfolio</div>
-      <div class="wallet-balance">$1900 AWAITING WITHDRAW</div>
-    </div>
-
-    <div class="wallet-buttons" style="display: flex; justify-content: space-between;">
+   <!-- Portfolio Balance Component -->
+<div style="position: relative; color: #222; text-align: center; padding: 20px; width: 320px; margin: 30px auto; background: rgba(255,255,255,0.92); border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.18);">
+  <div style="font-size: 1.1rem; margin-bottom: 8px; letter-spacing: 1px; color: #333;">
+    Portfolio Balance
+  </div>
+  <div style="font-size: 2.2rem; font-weight: bold; color: #067d68;">
+    $1900.00
+  </div>
+  <img src="IMG_1099.jpeg" alt="Portfolio" style="width: 100%; max-width: 320px; height: auto; margin-top: 18px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);" />
+</div>
+    
+  <div class="wallet-buttons" style="display: flex; justify-content: space-between;">
       <button class="wallet-btn" id="deposit-btn">Deposit</button>
       <button class="wallet-btn withdraw" id="withdraw-btn">Withdraw</button>
     </div>
