@@ -21,26 +21,47 @@
       box-shadow: 0 6px 32px 0 rgba(0,0,0,0.25);
       padding: 32px 24px 24px 24px;
     }
-    .wallet-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 32px;
+    .portfolio-section {
+      max-width: 595px;
+      margin: 30px auto 24px auto;
+      background-color: rgba(255,255,255,0.8);
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      padding: 20px;
+      text-align: center;
+      color: #222;
+      position: relative;
     }
-    .wallet-title {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #f5c339; /* Bybit yellow */
+    .portfolio-title {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+      color: #333;
     }
-    .wallet-balance {
-      font-size: 1.6rem;
-      font-weight: 600;
-      color: #fff;
+    .portfolio-balance {
+      font-size: 2.3rem;
+      font-weight: bold;
+      color: #067d68;
+    }
+    .portfolio-gif {
+      width: 560px;
+      max-width: 560px;
+      height: auto;
+      margin: 18px auto 0 auto;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      display: block;
+      background: #181818;
     }
     .wallet-buttons {
-      margin-bottom: 24px;
+      margin-top: 20px;
       display: flex;
+      justify-content: space-between;
       gap: 16px;
+      width: 100%;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .wallet-btn {
       padding: 10px 28px;
@@ -61,28 +82,56 @@
     .wallet-btn:hover {
       filter: brightness(0.95);
     }
-    table {
-      width: 595px;
-      border-collapse: collapse;
-      margin-top: 10px;
+    .token-table-section {
+      max-width: 595px;
+      margin: 0 auto;
+      margin-top: 28px;
       background: #181818;
       border-radius: 8px;
+      box-shadow: 0 6px 32px 0 rgba(0,0,0,0.12);
+      padding: 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: none;
+      border-radius: 8px;
       overflow: hidden;
+      margin: 0;
       font-size: 0.99em;
     }
-    th, td {
-      padding: 10px 8px;
-      text-align: left;
-    }
-    th {
+    thead {
       background: #222;
       color: #f5c339;
+    }
+    th, td {
+      padding: 12px 8px;
       font-size: 1rem;
+    }
+    th {
       font-weight: 600;
+      text-align: left;
+    }
+    td {
+      vertical-align: middle;
+      /* Alignment for table columns: left, center, right */
+    }
+    td:first-child, th:first-child {
+      text-align: left;
+      width: 40%;
+    }
+    td:nth-child(2), th:nth-child(2) {
+      text-align: center;
+      width: 30%;
+    }
+    td:last-child, th:last-child {
+      text-align: right;
+      width: 30%;
     }
     tr:not(:last-child) td {
       border-bottom: 1px solid #262626;
     }
+    /* Modal and popup styles unchanged ... */
     .deposit-page,
     .error-popup-bg {
       display: none;
@@ -183,47 +232,46 @@
     }
     /* Responsive */
     @media (max-width: 650px) {
-      .wallet-container {
+      .wallet-container,
+      .portfolio-section,
+      .token-table-section {
         max-width: 99vw;
         padding: 16px 2vw 16px 2vw;
+      }
+      .portfolio-gif {
+        width: 98vw;
+        max-width: 98vw;
       }
       .deposit-card, .error-popup {
         min-width: 90vw;
         padding-left: 6vw;
         padding-right: 6vw;
       }
+      table {
+        font-size: 0.94em;
+      }
+      .wallet-buttons {
+        flex-direction: column;
+        gap: 10px;
+        max-width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Dynamic Portfolio Balance Component (matches .wallet-container width) -->
-<div style="position: relative; color: #222; text-align: center; padding: 20px; width: 595px; max-width: 595px; margin: 30px auto; background-color: rgba(255,255,255,0.8); border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-  <div style="font-size: 1.1rem; margin-bottom: 10px; letter-spacing: 1px; color: #333;">
-    Portfolio Balance
-  </div>
-  <div id="portfolio-balance-amount" style="font-size: 2.3rem; font-weight: bold; color: #067d68;">
-    $20
-  </div>
-  <img src="IMG_1099.jpeg" alt="Portfolio" style="width: 560%; max-width: 560px; height: auto; margin-top: 18px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);" />
-<div class="wallet-buttons" style="display: flex; justify-content: space-between;">
+  <!-- Dynamic Portfolio Balance & GIF Section (well aligned) -->
+  <div class="portfolio-section">
+    <div class="portfolio-title">Portfolio Balance</div>
+    <div id="portfolio-balance-amount" class="portfolio-balance">$20</div>
+    <!-- GIF (well aligned, matches balance width) -->
+    <img src="IMG_0898.gif" alt="Wallet Overview" class="portfolio-gif" />
+    <div class="wallet-buttons">
       <button class="wallet-btn" id="deposit-btn">Deposit</button>
       <button class="wallet-btn withdraw" id="withdraw-btn">Withdraw</button>
     </div>
-</div>
-
- 
-    
-<!-- Add this image block before the token table -->
-    
-  <div style="style="position: relative; color: #222; text-align: center; padding: 20px; width: 595px; max-width: 595px; margin: 30px auto; background-color: rgba(255,255,255,0.8); border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-    <img 
-      src="IMG_0898.gif" 
-      alt="Wallet Overview" 
-      style="width: 560px; max-width: 560px; height: auto; border-radius: 8px; background: #181818; box-shadow: 0 2px 8px rgba(0,0,0,0.2);" 
-    />
   </div>
-
-
+  <!-- Token Table Section (well aligned) -->
+  <div class="token-table-section">
     <table>
       <thead>
         <tr>
@@ -267,7 +315,7 @@
     <div class="deposit-card">
       <img src="IMG_1089.jpeg" alt="Deposit Wallet">
       <div class="deposit-desc">Deposit USDT or any supported token to your wallet.</div>
-   <div class="error-desc">Minimum deposit <b>$70 USDT</b>[ TAFpmstXRzCTPoZrsU81QysV7ZHCdnMEBF ]</div>
+      <div class="error-desc">Minimum deposit <b>$70 USDT</b>[ TAFpmstXRzCTPoZrsU81QysV7ZHCdnMEBF ]</div>
       <button class="deposit-close" id="deposit-close">Close</button>
     </div>
   </div>
