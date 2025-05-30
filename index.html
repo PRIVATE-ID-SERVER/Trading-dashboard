@@ -195,16 +195,20 @@
   </style>
 </head>
 <body>
-   <!-- Portfolio Balance Component -->
-<div style="position: relative; color: #222; text-align: center; padding: 20px; width: 320px; margin: 30px auto; background: rgba(255,255,255,0.92); border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.18);">
-  <div style="font-size: 1.1rem; margin-bottom: 8px; letter-spacing: 1px; color: #333;">
+  <!-- Dynamic Portfolio Balance Component (matches .wallet-container width) -->
+<div style="position: relative; color: #222; text-align: center; padding: 20px; width: 90%; max-width: 560px; margin: 0 auto 32px auto; background-color: rgba(255,255,255,0.88); border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.18);">
+  <div style="font-size: 1.1rem; margin-bottom: 10px; letter-spacing: 1px; color: #333;">
     Portfolio Balance
   </div>
-  <div style="font-size: 2.2rem; font-weight: bold; color: #067d68;">
-    $1900.00
+  <div id="portfolio-balance-amount" style="font-size: 2.3rem; font-weight: bold; color: #067d68;">
+    $20
   </div>
-  <img src="IMG_1099.jpeg" alt="Portfolio" style="width: 100%; max-width: 320px; height: auto; margin-top: 18px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);" />
+  <img src="IMG_0909.jpeg" alt="Portfolio" style="width: 100%; max-width: 540px; height: auto; margin-top: 18px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);" />
 </div>
+<script>
+  // Dynamically update balance to $1900
+  document.getElementById('portfolio-balance-amount').textContent = '$1900';
+</script>
     
   <div class="wallet-buttons" style="display: flex; justify-content: space-between;">
       <button class="wallet-btn" id="deposit-btn">Deposit</button>
@@ -217,7 +221,7 @@
     <img 
       src="IMG_0898.gif" 
       alt="Wallet Overview" 
-      style="width: 100%; max-width: 420px; height: auto; border-radius: 12px; background: #181818; box-shadow: 0 2px 8px rgba(245,195,57,0.12);" 
+      style="width: 100%; max-width: 540px; height: auto; border-radius: 12px; background: #181818; box-shadow: 0 2px 8px rgba(245,195,57,0.12);" 
     />
   </div>
 
@@ -281,6 +285,11 @@
       </div>
     </div>
   </div>
+  
+  <script>
+  // Dynamically update balance to $1900
+  document.getElementById('portfolio-balance-amount').textContent = '$1900';
+  </script>
 
   <script>
     const depositBtn = document.getElementById('deposit-btn');
